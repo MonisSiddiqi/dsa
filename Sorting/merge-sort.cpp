@@ -3,29 +3,31 @@
 using namespace std;
 
 void merge(vector<int>& arr, int low, int mid, int high) {
-    int i = low, j = mid + 1;
+    int left = low, right = mid + 1;
 
     vector<int> temp;
 
-    while(i <= mid && j <= high) {
-        if(arr[i] <= arr[j]) {
-            temp.push_back(arr[i++]);
+    while(left <= mid && right <= high) {
+        if(arr[left] <= arr[right]) {
+            temp.push_back(arr[left]);
+            left++;
         }
         else {
-            temp.push_back(arr[j++]);
+            temp.push_back(arr[right]);
+            right++;
         }
     }
 
-    while(i <= mid) {
-        temp.push_back(arr[i++]);
+    while(left <= mid) {
+        temp.push_back(arr[left++]);
     }
 
-    while(j <= high) {
-        temp.push_back(arr[j++]);
+    while(right <= high) {
+        temp.push_back(arr[right++]);
     }
 
-    for(int i = 0; i < temp.size(); i++) {
-        arr[low + i] = temp[i];
+    for(int i = low; i <= high; i++) {
+        arr[i] = temp[i - low];
     }
 }
 
