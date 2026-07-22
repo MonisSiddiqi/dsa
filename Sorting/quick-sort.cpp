@@ -3,12 +3,28 @@
 
 using namespace std;
 
-int partition(vector<int>& arr, int low, int high) {
+int lomutoPartition(vector<int>& arr, int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+
+    for(int j = low; j <= high - 1; j++) {
+        if(arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+
+    swap(arr[i + 1], arr[high]);
+
+    return i + 1;
+}
+
+int hoarePartition(vector<int>& arr, int low, int high) {
     int pivot = arr[low];
-    int i = low;
-    int j = high;
+    int i = low, j = high;
 
     while(i < j) {
+
         while(i <= high - 1 && arr[i] <= pivot) {
             i++;
         }
@@ -30,7 +46,7 @@ int partition(vector<int>& arr, int low, int high) {
 void quickSort(vector<int>& arr, int low, int high) {
     if(high <= low) return;
 
-    int partitionIdx = partition(arr, low, high);
+    int partitionIdx = hoarePartition(arr, low, high);
 
     quickSort(arr, low, partitionIdx - 1);
     quickSort(arr, partitionIdx + 1, high);
